@@ -492,7 +492,7 @@ Implement a function that returns the last digit of a given number.
 -}
 -- DON'T FORGET TO SPECIFY THE TYPE IN HERE
 lastDigit :: Int -> Int
-lastDigit n = mod n 10
+lastDigit n = mod (abs n) 10
 
 
 {- |
@@ -558,8 +558,8 @@ Casual reminder about adding top-level type signatures for all functions :)
 
 mid :: Int -> Int -> Int -> Int
 mid x y z
-    | ((x < y) && (y < z)) || ((z < y) && (y < x)) = y
-    | ((y < x) && (x < z)) || ((z < x) && (x < y)) = x
+    | ((x <= y) && (y <= z)) || ((z <= y) && (y <= x)) = y
+    | ((y <= x) && (x <= z)) || ((z <= x) && (x <= y)) = x
     | otherwise = z
 
 {- |
@@ -575,9 +575,9 @@ True
 False
 -}
 isVowel :: Char -> Bool
-isVowel c
-    | (c == 'a') || (c == 'e') || (c == 'o') || (c == 'i') || (c == 'u') = True
-    | otherwise = False
+isVowel c = 
+    (c == 'a') || (c == 'e') || (c == 'o') || (c == 'i') || (c == 'u')
+    || (c == 'A') || (c == 'E') || (c == 'O') || (c == 'I') || (c == 'U')
 
 
 {- |
@@ -642,10 +642,10 @@ specifying complex expressions.
 -}
 
 sumLast2 :: Int -> Int
-sumLast2 n = 
-    let finalDigit = mod n 10
-        secondFinalDigit = mod (div n 10) 10
-    in finalDigit + secondFinalDigit
+sumLast2 n = finalDigit + secondFinalDigit
+    where
+        finalDigit = lastDigit n
+        secondFinalDigit = lastDigit (div n 10)
 
 
 {- |
